@@ -52,23 +52,29 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../PacMan/gamescene.cpp \
+SOURCES       = ../PacMan/entity.cpp \
+		../PacMan/gamescene.cpp \
 		../PacMan/main.cpp \
 		../PacMan/mainwindow.cpp \
 		../PacMan/maze.cpp \
+		../PacMan/pacman.cpp \
 		../PacMan/resources.cpp qrc_resources.cpp \
 		moc_gamescene.cpp \
 		moc_mainwindow.cpp \
-		moc_maze.cpp
-OBJECTS       = gamescene.o \
+		moc_maze.cpp \
+		moc_pacman.cpp
+OBJECTS       = entity.o \
+		gamescene.o \
 		main.o \
 		mainwindow.o \
 		maze.o \
+		pacman.o \
 		resources.o \
 		qrc_resources.o \
 		moc_gamescene.o \
 		moc_mainwindow.o \
-		moc_maze.o
+		moc_maze.o \
+		moc_pacman.o
 DIST          = /home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/common/unix.conf \
 		/home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/common/linux.conf \
@@ -349,13 +355,17 @@ DIST          = /home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/features/exceptions.prf \
 		/home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/features/yacc.prf \
 		/home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/features/lex.prf \
-		../PacMan/PacMan.pro ../PacMan/gamescene.h \
+		../PacMan/PacMan.pro ../PacMan/entity.h \
+		../PacMan/gamescene.h \
 		../PacMan/mainwindow.h \
 		../PacMan/maze.h \
-		../PacMan/resources.h ../PacMan/gamescene.cpp \
+		../PacMan/pacman.h \
+		../PacMan/resources.h ../PacMan/entity.cpp \
+		../PacMan/gamescene.cpp \
 		../PacMan/main.cpp \
 		../PacMan/mainwindow.cpp \
 		../PacMan/maze.cpp \
+		../PacMan/pacman.cpp \
 		../PacMan/resources.cpp
 QMAKE_TARGET  = PacMan
 DESTDIR       = 
@@ -955,8 +965,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../PacMan/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../PacMan/gamescene.h ../PacMan/mainwindow.h ../PacMan/maze.h ../PacMan/resources.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../PacMan/gamescene.cpp ../PacMan/main.cpp ../PacMan/mainwindow.cpp ../PacMan/maze.cpp ../PacMan/resources.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../PacMan/entity.h ../PacMan/gamescene.h ../PacMan/mainwindow.h ../PacMan/maze.h ../PacMan/pacman.h ../PacMan/resources.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../PacMan/entity.cpp ../PacMan/gamescene.cpp ../PacMan/main.cpp ../PacMan/mainwindow.cpp ../PacMan/maze.cpp ../PacMan/pacman.cpp ../PacMan/resources.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../PacMan/mainwindow.ui $(DISTDIR)/
 
 
@@ -986,7 +996,8 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_resources.cpp
 qrc_resources.cpp: ../PacMan/resources.qrc \
 		/home/jeyspy/Qt/6.4.0/gcc_64/libexec/rcc \
-		../PacMan/res/sprite/maze.png
+		../PacMan/res/sprite/maze.png \
+		../PacMan/res/sprite/pacman.png
 	/home/jeyspy/Qt/6.4.0/gcc_64/libexec/rcc -name resources --no-zstd ../PacMan/resources.qrc -o qrc_resources.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -995,9 +1006,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -dM -E -o moc_predefs.h /home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_gamescene.cpp moc_mainwindow.cpp moc_maze.cpp
+compiler_moc_header_make_all: moc_gamescene.cpp moc_mainwindow.cpp moc_maze.cpp moc_pacman.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_gamescene.cpp moc_mainwindow.cpp moc_maze.cpp
+	-$(DEL_FILE) moc_gamescene.cpp moc_mainwindow.cpp moc_maze.cpp moc_pacman.cpp
 moc_gamescene.cpp: ../PacMan/gamescene.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/QGraphicsScene \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/qgraphicsscene.h \
@@ -1334,6 +1345,130 @@ moc_maze.cpp: ../PacMan/maze.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/libexec/moc
 	/home/jeyspy/Qt/6.4.0/gcc_64/libexec/moc $(DEFINES) --include /home/jeyspy/Documents/CPP/Computing-Science-II/lab05_pacman/build-PacMan-Desktop_Qt_6_4_0_GCC_64bit-Debug/moc_predefs.h -I/home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -I/home/jeyspy/Documents/CPP/Computing-Science-II/lab05_pacman/PacMan -I/home/jeyspy/Qt/6.4.0/gcc_64/include -I/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets -I/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui -I/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../PacMan/maze.h -o moc_maze.cpp
 
+moc_pacman.cpp: ../PacMan/pacman.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QObject \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobject.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qnamespace.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qglobal.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qconfig.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtcore-config.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtconfigmacros.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtcoreexports.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsysinfo.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qlogging.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qflags.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcompare_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qatomic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qnumeric.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qversiontagging.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qforeach.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstring.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qchar.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qrefcount.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qpair.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qarraydataops.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringfwd.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringliteral.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qanystringview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qlist.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiterator.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringlist.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qalgorithms.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcoreevent.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmetatype.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcompare.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qscopeguard.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qdatastream.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiterable.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmath.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobject_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbindingstorage.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpixmap.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtgui-config.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtguiexports.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qrect.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmargins.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsize.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qpoint.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qcolor.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qrgb.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qrgba64.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qshareddata.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qimage.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpixelformat.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtransform.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpolygon.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qregion.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qline.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qvariant.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qdebug.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtextstream.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringconverter_base.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmap.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qset.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qhash.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpainterpath.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QTimer \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtimer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbasictimer.h \
+		../PacMan/resources.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QSize \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QColor \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QString \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QPoint \
+		../PacMan/entity.h \
+		moc_predefs.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/libexec/moc
+	/home/jeyspy/Qt/6.4.0/gcc_64/libexec/moc $(DEFINES) --include /home/jeyspy/Documents/CPP/Computing-Science-II/lab05_pacman/build-PacMan-Desktop_Qt_6_4_0_GCC_64bit-Debug/moc_predefs.h -I/home/jeyspy/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -I/home/jeyspy/Documents/CPP/Computing-Science-II/lab05_pacman/PacMan -I/home/jeyspy/Qt/6.4.0/gcc_64/include -I/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets -I/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui -I/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../PacMan/pacman.h -o moc_pacman.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -1354,6 +1489,103 @@ compiler_lex_clean:
 compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
+
+entity.o: ../PacMan/entity.cpp ../PacMan/entity.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpixmap.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qglobal.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qconfig.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtcore-config.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtconfigmacros.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtcoreexports.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsysinfo.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qlogging.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qflags.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcompare_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qatomic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qnumeric.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qversiontagging.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qforeach.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtgui-config.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtguiexports.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qnamespace.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qrect.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstring.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qchar.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qrefcount.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qpair.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qarraydataops.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringfwd.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringliteral.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qanystringview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmargins.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsize.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qpoint.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qcolor.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qrgb.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringlist.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qlist.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiterator.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qalgorithms.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qrgba64.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qshareddata.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmetatype.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcompare.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qscopeguard.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qdatastream.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiterable.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmath.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qimage.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpixelformat.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtransform.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpolygon.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qregion.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qline.h \
+		../PacMan/resources.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QSize \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QColor \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QString \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QPoint
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o entity.o ../PacMan/entity.cpp
 
 gamescene.o: ../PacMan/gamescene.cpp ../PacMan/gamescene.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/QGraphicsScene \
@@ -1462,6 +1694,7 @@ gamescene.o: ../PacMan/gamescene.cpp ../PacMan/gamescene.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QSize \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QColor \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QString \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QPoint \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QDebug \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qdebug.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtextstream.h \
@@ -1836,7 +2069,8 @@ mainwindow.o: ../PacMan/mainwindow.cpp ../PacMan/mainwindow.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/QWidget \
 		../PacMan/resources.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QColor \
-		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QString
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QString \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QPoint
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../PacMan/mainwindow.cpp
 
 maze.o: ../PacMan/maze.cpp ../PacMan/maze.h \
@@ -1912,6 +2146,145 @@ maze.o: ../PacMan/maze.cpp ../PacMan/maze.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbindingstorage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o maze.o ../PacMan/maze.cpp
 
+pacman.o: ../PacMan/pacman.cpp ../PacMan/pacman.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QObject \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobject.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qnamespace.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qglobal.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qconfig.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtcore-config.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtconfigmacros.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtcoreexports.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsysinfo.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qlogging.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qflags.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcompare_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qatomic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qnumeric.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qversiontagging.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qforeach.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstring.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qchar.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qrefcount.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qpair.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qarraydataops.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringfwd.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringliteral.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qanystringview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qlist.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiterator.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringlist.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qalgorithms.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcoreevent.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmetatype.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcompare.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qscopeguard.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qdatastream.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiterable.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmath.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qobject_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbindingstorage.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpixmap.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtgui-config.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtguiexports.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qrect.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmargins.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsize.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qpoint.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qcolor.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qrgb.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qrgba64.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qshareddata.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qimage.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpixelformat.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qtransform.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpolygon.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qregion.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qline.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qvariant.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qdebug.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtextstream.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringconverter_base.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qmap.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qset.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qhash.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpainterpath.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QTimer \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtimer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qbasictimer.h \
+		../PacMan/resources.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QSize \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QColor \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QString \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QPoint \
+		../PacMan/entity.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QKeyEvent \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qevent.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qiodevice.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qpointer.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qurl.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qeventpoint.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qvector2d.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qvectornd.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qpointingdevice.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qinputdevice.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qscreen.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QList \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QRect \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QSizeF \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/QTransform \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qnativeinterface.h \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qkeysequence.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pacman.o ../PacMan/pacman.cpp
+
 resources.o: ../PacMan/resources.cpp ../PacMan/resources.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QSize \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qsize.h \
@@ -1976,6 +2349,8 @@ resources.o: ../PacMan/resources.cpp ../PacMan/resources.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qstringmatcher.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtGui/qrgba64.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QString \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QPoint \
+		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qpoint.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/QDebug \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qdebug.h \
 		/home/jeyspy/Qt/6.4.0/gcc_64/include/QtCore/qtextstream.h \
@@ -2015,6 +2390,9 @@ moc_mainwindow.o: moc_mainwindow.cpp
 
 moc_maze.o: moc_maze.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_maze.o moc_maze.cpp
+
+moc_pacman.o: moc_pacman.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_pacman.o moc_pacman.cpp
 
 ####### Install
 

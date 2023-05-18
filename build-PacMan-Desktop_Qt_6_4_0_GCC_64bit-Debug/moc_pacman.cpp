@@ -1,5 +1,5 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'gamescene.h'
+** Meta object code from reading C++ file 'pacman.h'
 **
 ** Created by: The Qt Meta Object Compiler version 68 (Qt 6.4.0)
 **
@@ -7,10 +7,10 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../PacMan/gamescene.h"
+#include "../PacMan/pacman.h"
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'gamescene.h' doesn't include <QObject>."
+#error "The header file 'pacman.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 68
 #error "This file was generated using the moc from 6.4.0. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -25,37 +25,34 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
-struct qt_meta_stringdata_GameScene_t {
-    uint offsetsAndSizes[8];
-    char stringdata0[10];
-    char stringdata1[5];
+struct qt_meta_stringdata_Pacman_t {
+    uint offsetsAndSizes[6];
+    char stringdata0[7];
+    char stringdata1[13];
     char stringdata2[1];
-    char stringdata3[8];
 };
 #define QT_MOC_LITERAL(ofs, len) \
-    uint(sizeof(qt_meta_stringdata_GameScene_t::offsetsAndSizes) + ofs), len 
-Q_CONSTINIT static const qt_meta_stringdata_GameScene_t qt_meta_stringdata_GameScene = {
+    uint(sizeof(qt_meta_stringdata_Pacman_t::offsetsAndSizes) + ofs), len 
+Q_CONSTINIT static const qt_meta_stringdata_Pacman_t qt_meta_stringdata_Pacman = {
     {
-        QT_MOC_LITERAL(0, 9),  // "GameScene"
-        QT_MOC_LITERAL(10, 4),  // "loop"
-        QT_MOC_LITERAL(15, 0),  // ""
-        QT_MOC_LITERAL(16, 7)   // "restart"
+        QT_MOC_LITERAL(0, 6),  // "Pacman"
+        QT_MOC_LITERAL(7, 12),  // "updatePixmap"
+        QT_MOC_LITERAL(20, 0)   // ""
     },
-    "GameScene",
-    "loop",
-    "",
-    "restart"
+    "Pacman",
+    "updatePixmap",
+    ""
 };
 #undef QT_MOC_LITERAL
 } // unnamed namespace
 
-Q_CONSTINIT static const uint qt_meta_data_GameScene[] = {
+Q_CONSTINIT static const uint qt_meta_data_Pacman[] = {
 
  // content:
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -63,73 +60,72 @@ Q_CONSTINIT static const uint qt_meta_data_GameScene[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   26,    2, 0x08,    1 /* Private */,
-       3,    0,   27,    2, 0x08,    2 /* Private */,
+       1,    0,   20,    2, 0x08,    1 /* Private */,
 
  // slots: parameters
-    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
 };
 
-Q_CONSTINIT const QMetaObject GameScene::staticMetaObject = { {
-    QMetaObject::SuperData::link<QGraphicsScene::staticMetaObject>(),
-    qt_meta_stringdata_GameScene.offsetsAndSizes,
-    qt_meta_data_GameScene,
+Q_CONSTINIT const QMetaObject Pacman::staticMetaObject = { {
+    QMetaObject::SuperData::link<QObject::staticMetaObject>(),
+    qt_meta_stringdata_Pacman.offsetsAndSizes,
+    qt_meta_data_Pacman,
     qt_static_metacall,
     nullptr,
-    qt_incomplete_metaTypeArray<qt_meta_stringdata_GameScene_t,
+    qt_incomplete_metaTypeArray<qt_meta_stringdata_Pacman_t,
         // Q_OBJECT / Q_GADGET
-        QtPrivate::TypeAndForceComplete<GameScene, std::true_type>,
-        // method 'loop'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'restart'
+        QtPrivate::TypeAndForceComplete<Pacman, std::true_type>,
+        // method 'updatePixmap'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
 
-void GameScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void Pacman::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<GameScene *>(_o);
+        auto *_t = static_cast<Pacman *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->loop(); break;
-        case 1: _t->restart(); break;
+        case 0: _t->updatePixmap(); break;
         default: ;
         }
     }
     (void)_a;
 }
 
-const QMetaObject *GameScene::metaObject() const
+const QMetaObject *Pacman::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *GameScene::qt_metacast(const char *_clname)
+void *Pacman::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_GameScene.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_Pacman.stringdata0))
         return static_cast<void*>(this);
-    return QGraphicsScene::qt_metacast(_clname);
+    if (!strcmp(_clname, "QGraphicsPixmapItem"))
+        return static_cast< QGraphicsPixmapItem*>(this);
+    if (!strcmp(_clname, "Entity"))
+        return static_cast< Entity*>(this);
+    return QObject::qt_metacast(_clname);
 }
 
-int GameScene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int Pacman::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QGraphicsScene::qt_metacall(_c, _id, _a);
+    _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 1;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 1)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 1;
     }
     return _id;
 }
